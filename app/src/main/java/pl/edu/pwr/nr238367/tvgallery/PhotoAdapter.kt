@@ -30,6 +30,11 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
         val rowView = holder.rowView
         val url = photoUrls[position]
 
+        rowView.setOnClickListener { v ->
+            v.clearAnimation()
+            v.isSelected = true
+            v.clearAnimation()
+        }
         rowView.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 view.setBackgroundResource(R.drawable.focusable_border)
