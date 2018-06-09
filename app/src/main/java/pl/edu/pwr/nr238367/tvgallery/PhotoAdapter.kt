@@ -1,5 +1,6 @@
 package pl.edu.pwr.nr238367.tvgallery
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -31,9 +32,7 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
         val url = photoUrls[position]
 
         rowView.setOnClickListener { v ->
-            v.clearAnimation()
             v.isSelected = true
-            v.clearAnimation()
         }
         rowView.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
@@ -41,7 +40,8 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
                 onFocusChanged(view)
             }
             if (!hasFocus) {
-                view.setBackgroundResource(0)
+//                view.setBackgroundResource(0)
+                view.setBackgroundColor(Color.TRANSPARENT)
             }
         }
 //        Glide.with(context)
