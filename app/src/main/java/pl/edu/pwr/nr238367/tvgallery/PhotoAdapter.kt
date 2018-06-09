@@ -1,13 +1,9 @@
 package pl.edu.pwr.nr238367.tvgallery
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.photo_row.view.*
 
@@ -34,8 +30,14 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
         val rowView = holder.rowView
         val url = photoUrls[position]
 
-        rowView.setOnFocusChangeListener{ view, _ ->
-            onFocusChanged(view)
+        rowView.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                view.setBackgroundResource(R.drawable.focusable_border)
+                onFocusChanged(view)
+            }
+            if (!hasFocus) {
+                view.setBackgroundResource(0)
+            }
         }
 //        Glide.with(context)
 //                .load(url)
@@ -44,8 +46,7 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
 //                .fitCenter()
 //                .into(rowView.imageCard.photo)
         Picasso.get().load(url)
-                .placeholder(R.drawable.banner)
-                .error(R.drawable.banner)
+                .error(R.drawable.error)
                 .fit()
                 .into(rowView.imageCard.photo)
     }

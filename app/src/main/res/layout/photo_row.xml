@@ -4,8 +4,7 @@
     android:layout_height="?android:listPreferredItemHeightLarge"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-    android:focusable="true"
-    android:background="@drawable/focusable_border">
+    android:focusable="true">
 
     <android.support.v17.leanback.widget.BaseCardView
         android:id="@+id/imageCard"
@@ -18,6 +17,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:scaleType="fitStart" />
+            android:scaleType="fitStart"
+            android:contentDescription="@string/thumbnail_description" />
     </android.support.v17.leanback.widget.BaseCardView>
 </FrameLayout>

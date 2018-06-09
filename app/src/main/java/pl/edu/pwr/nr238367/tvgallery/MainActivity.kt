@@ -1,15 +1,11 @@
 package pl.edu.pwr.nr238367.tvgallery
 
 import android.app.Activity
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.photo_row.view.*
 
 
 class MainActivity : Activity() {
@@ -29,8 +25,7 @@ class MainActivity : Activity() {
         val position = photosList.findContainingViewHolder(view)?.adapterPosition
         position?.let {
             Picasso.get().load(urlList[position])
-                    .placeholder(R.drawable.banner)
-                    .error(R.drawable.banner)
+                    .error(R.drawable.error)
                     .fit()
                     .into(main_photo)
         }
