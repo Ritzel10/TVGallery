@@ -7,14 +7,19 @@ import android.view.View
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
+const val PHOTO_AMOUNT = 200
 
 class MainActivity : Activity() {
-    val urlList = listOf("https://rapdose.com/wp-content/uploads/2018/06/kanye-west-kid-cudi-kids-see-ghosts-album-stream.png", "https://i.imgur.com/U4d8MLm.jpg", "https://i.redd.it/tqt2ewnd9m901.jpg",  "https://i.redd.it/n0x244u8ajez.png", "https://i.redd.it/3fpc5bvecuq01.jpg", "https://imgur.com/8oKJVqi", "https://i.redd.it/g4eou5yk0sf01.jpg")
+    private val urlList: ArrayList<String> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val viewManager = LinearLayoutManager(this)
         val photoAdapter = PhotoAdapter( urlList, ::updateMainPhoto)
+        //get photo urls from api
+        PhotoDownloader.getPhotos(this, urlList, PHOTO_AMOUNT, photoAdapter)
+
         photosList.apply{
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -23,6 +28,7 @@ class MainActivity : Activity() {
     }
     private fun updateMainPhoto(view: View){
         val position = photosList.findContainingViewHolder(view)?.adapterPosition
+        //load full resolution photo
         position?.let {
             Picasso.get().load(urlList[position])
                     .error(R.drawable.error)

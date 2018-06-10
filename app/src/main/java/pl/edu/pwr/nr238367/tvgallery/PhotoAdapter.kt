@@ -16,11 +16,7 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
         return ViewHolder(view)
     }
 
-    /**
-     * Returns the total number of items in the data set held by the adapter.
-     *
-     * @return The total number of items in this adapter.
-     */
+
     override fun getItemCount(): Int {
         return photoUrls.size
     }
@@ -36,20 +32,16 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
         }
         rowView.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
+                //highlight focused item
                 view.setBackgroundResource(R.drawable.focusable_border)
                 onFocusChanged(view)
             }
             if (!hasFocus) {
-//                view.setBackgroundResource(0)
+                //unhighlight deselected item
                 view.setBackgroundColor(Color.TRANSPARENT)
             }
         }
-//        Glide.with(context)
-//                .load(url)
-//                .placeholder(R.drawable.banner)
-//                .error(R.drawable.banner)
-//                .fitCenter()
-//                .into(rowView.imageCard.photo)
+        //load the photo
         Picasso.get().load(url)
                 .error(R.drawable.error)
                 .fit()
