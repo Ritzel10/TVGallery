@@ -1,15 +1,17 @@
 package pl.edu.pwr.nr238367.tvgallery
 
+import android.content.Context
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.photo_row.view.*
 
 
-class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChanged:(view: View)->Unit?) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>(){
+class PhotoAdapter(private val context: Context, private val photoUrls: List<String>, private val photoDisplayer: PhotoDisplayer) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view:View = LayoutInflater.from(parent.context).inflate(R.layout.photo_row, parent, false)
@@ -34,18 +36,29 @@ class PhotoAdapter(private val photoUrls:List<String>, private val onFocusChange
             if (hasFocus) {
                 //highlight focused item
                 view.setBackgroundResource(R.drawable.focusable_border)
-                onFocusChanged(view)
+                photoDisplayer.updateMainPhoto(view)
             }
             if (!hasFocus) {
                 //unhighlight deselected item
                 view.setBackgroundColor(Color.TRANSPARENT)
             }
         }
-        //load the photo
-        Picasso.get().load(url)
+        //if item is the last one load additional data
+        if (position == photoUrls.size - 1) {
+            photoDisplayer.loadMoreData()
+        }
+
+        Log.i("url", url)
+        Glide.with(context)
+                .load(url)
+                .centerCrop()
                 .error(R.drawable.error)
-                .fit()
                 .into(rowView.imageCard.photo)
+//        //load the photo
+//        Picasso.get().load(url)
+//                .error(R.drawable.error)
+//                .fit()
+//                .into(rowView.imageCard.photo)
     }
 
     class ViewHolder(val rowView: View) :RecyclerView.ViewHolder(rowView)
